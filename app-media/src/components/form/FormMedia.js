@@ -1,7 +1,23 @@
-import React from 'react';
-import { Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
+import React, { useState } from 'react';
+import { Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
 
-const FormMedia = ({ nota1, nota2, setNota1, setNota2, calcularMedia }) => {
+const FormMedia = ({ setMedia }) => {
+  const [nota1, setNota1] = useState('');
+  const [nota2, setNota2] = useState('');
+
+  const calcularMedia = () => {
+    const n1 = parseFloat(nota1);
+    const n2 = parseFloat(nota2);
+
+    if (isNaN(n1) || isNaN(n2)) {
+      alert('Por favor, insira valores numéricos válidos.');
+      return;
+    }
+
+    const calculatedMedia = (n1 + n2) / 2;
+    setMedia(calculatedMedia.toFixed(2));
+  };
+
   return (
     <>
       <TextInput
@@ -18,7 +34,7 @@ const FormMedia = ({ nota1, nota2, setNota1, setNota2, calcularMedia }) => {
         value={nota2}
         keyboardType="numeric"
       />
-        <TouchableHighlight style={styles.button} onPress={calcularMedia}>
+      <TouchableHighlight style={styles.button} onPress={calcularMedia}>
         <Text style={styles.buttonText}>Calcular Média</Text>
       </TouchableHighlight>
     </>
@@ -46,7 +62,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
 });
 
 export default FormMedia;
